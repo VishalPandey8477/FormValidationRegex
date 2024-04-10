@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>form</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+</head>
+
+<body style="background-image: url(assets/images/formbackground.jpg); background-size: cover;">
+
+  <div class=" m-3 row justify-content-center  p-3  ">
+
+    <div class=" border p-3" style="  box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+      <div class="row justify-content-center">
+        <h1 style="font-family: cursive">Form Validation Regex</h1>
+      </div>
+
+      <form action="" id="myForm">
+
+
+
+        <div class="form-group">
+          <label for="exampleInputUser">Username</label>
+          <input type="text" class="form-control" id="userName" placeholder="Username" />
+          <span id="userNameError" class="text-light font-weight-bold"></span>
+
+        </div>
+
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control shadow" id="emailAddress" aria-describedby="emailHelp"
+            placeholder="Enter email" />
+          <span id="userEmailError" class="text-light font-weight-bold"></span>
+        </div>
+
+
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" />
+            <span id="userPasswordError" class="text-light font-weight-bold"></span>
+
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="exampleInputPassword2"> Confirm Password</label>
+            <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password" />
+            <span id="userConfirmPasswordError" class="text-light font-weight-bold"></span>
+
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="inputAddress">Mobile Number</label>
+          <input type="text" class="form-control" id="inputNumber" placeholder="789XXXXXX">
+          <span id="userNumberError" class="text-light font-weight-bold"></span>
+        </div>
+
+        <div class="form-group">
+          <label class=" font-weight-bold pr-3 my-3">Gender </label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Male">
+            <label class="form-check-label" for="inlineRadio1">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Female">
+            <label class="form-check-label" for="inlineRadio2">Female</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Other">
+            <label class="form-check-label" for="inlineRadio3">Other</label>
+          </div>
+          <span id="userGenderError" class="text-light font-weight-bold"></span>
+
+
+        </div>
+
+        <div class="form-group">
+          <label for="selectCounty font-weight-bold  ">Select Country : </label>
+          <select class="form-select" id="selectCounty">
+            <option selected value="">Select Country</option>
+            <option value="India">India</option>
+            <option value="China">China</option>
+            <option value="Nepal">Nepal</option>
+          </select>
+          <span id="userCountryError" class="text-light font-weight-bold"></span>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary" onclick="passValue(event);">Submit</button>
+
+      </form>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+<script>
+  const inputFile = document.getElementById("inputFile");
+  inputFile.addEventListener('change', () => {
+    const fr = new FileReader();
+    fr.readAsDataURL(inputFile.files[0]);
+
+    fr.addEventListener('load', () => {
+      const url = fr.result;
+      console.log(url)
+      localStorage.setItem('imageUrl', url);
+    })
+
+  })
+
+
+  function passValue(e) {
+    e.preventDefault();
+    const userName = document.getElementById("userName").value;
+    const userEmail = document.getElementById("emailAddress").value;
+    const userPass = document.getElementById("password").value;
+    const userConfirmPass = document.getElementById("confirmpassword").value;
+    const mobileNumber = (document.getElementById("inputNumber").value);
+
+    //--------------------------------------- User Name Test using Regex------------------------------------------
+    let userNameRegex = /^[a-zA-Z]{4,10}$/;
+
+    if (userNameRegex.test(userName)) {
+      document.getElementById("userNameError").innerHTML = ""
+    }
+    else {
+      document.getElementById("userNameError").innerHTML = "** Enter Again"
+      return false;
+
+    }
+
+
+
+    // ---------------------------------------------User Email Test Using Regex-----------------------------------
+    let userEmailRegex = /^[A-za-z_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
+    if (userEmailRegex.test(userEmail)) {
+      document.getElementById("userEmailError").innerHTML = ""
+
+    }
+    else {
+      document.getElementById("userEmailError").innerHTML = "** Enter Again"
+      return false;
+
+
+    }
+
+
+    //-----------------------------------------------------User Password Test Using Regex---------------------------------
+
+    let userPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+    if (userPasswordRegex.test(userPass)) {
+      document.getElementById("userPasswordError").innerHTML = ""
+
+    }
+    else {
+      document.getElementById("userPasswordError").innerHTML = "** Enter Again"
+      return false;
+
+    }
+
+
+    // -------------------------------------------Password Confirm check ------------------------------
+
+
+    if (userPass == userConfirmPass) {
+      document.getElementById("userConfirmPasswordError").innerHTML = ""
+
+    }
+    else {
+      document.getElementById("userConfirmPasswordError").innerHTML = "** Not Match"
+      return false;
+    }
+
+
+
+    // --------------------------------------------------For Mobile NUmber -----------------------------------
+
+    let mobileCheckRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+
+    if (mobileCheckRegex.test(mobileNumber)) {
+      console.log("working");
+      document.getElementById("userNumberError").innerHTML = ""
+
+    }
+    else {
+      document.getElementById("userNumberError").innerHTML = "** Enter Again"
+      return false;
+    }
+
+    //----------------------------------------- Radio Button--------------------------------
+
+    var rad1 = document.getElementById("inlineRadio1");
+    var rad2 = document.getElementById("inlineRadio2");
+    var rad3 = document.getElementById("inlineRadio3");
+
+    if (rad1.checked == true) {
+      localStorage.setItem('gender', "Male")
+
+    }
+    else if (rad2.checked == true) {
+      localStorage.setItem('gender', "Female")
+
+    }
+    else if (rad3.checked == true) {
+      localStorage.setItem('gender', "Other")
+
+    }
+    else {
+      document.getElementById("userGenderError").innerHTML = "** Select Gender"
+      return false
+    }
+
+
+    // -------------------------------------For the Select Country---------------------
+
+    const country = document.getElementById("selectCounty").value;
+    if (country == "") {
+      document.getElementById("userCountryError").innerHTML = "** Select Country"
+      return false
+
+    }
+
+    location.href = "result.html"
+    localStorage.setItem('textvalue', userName);
+    localStorage.setItem('email', userEmail);
+    localStorage.setItem('mobilenumber', mobileNumber);
+    localStorage.setItem('country', country);
+    document.getElementById("myForm").reset();
+
+  }
+</script>
+
+</html>
